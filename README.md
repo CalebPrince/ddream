@@ -42,6 +42,31 @@ C:/xampp/mysql/bin/mysql.exe -u root -e "CREATE DATABASE ddream CHARACTER SET ut
 PHP 8.2+ with `pdo_mysql`, `mbstring`, `openssl`, plus `gd` and `fileinfo` for the
 media library. MySQL 5.7+ or MariaDB 10.3+.
 
+## Production deployment
+
+> **Production warning:** every push to `main` is deployed automatically to the live
+> website at **diasporadomesticrem.com** by GitHub Actions. Do not push untested or
+> incomplete work to `main`.
+
+The workflow in `.github/workflows/deploy.yml` builds the Tailwind stylesheet and
+deploys the repository to Bluehost over FTPS. Its FTP account is rooted at:
+
+```text
+/home2/ckqhtcmy/diasporadomesticrem.com
+```
+
+The domain document root is:
+
+```text
+/home2/ckqhtcmy/diasporadomesticrem.com/public
+```
+
+Deployment requires the `FTP_SERVER`, `FTP_USERNAME`, and `FTP_PASSWORD` GitHub
+Actions repository secrets. Production-owned data is excluded from deployment:
+`.env`, `storage/`, and `public/uploads/`. Configure `.env` directly on the server;
+never commit it. Deployment status and logs are available in the repository's
+**Actions** tab. The workflow can also be run manually with **Run workflow**.
+
 ## Running locally
 
 ```bash
