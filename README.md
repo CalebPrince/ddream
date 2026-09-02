@@ -61,6 +61,20 @@ The domain document root is:
 /home2/ckqhtcmy/diasporadomesticrem.com/public
 ```
 
+### Migrations are not deployed automatically
+
+The workflow copies files; it does not touch the database. After deploying a change
+that adds a file to `db/migrations`, run the runner once on the server, from the
+cPanel Terminal in the directory the FTP account is rooted at:
+
+```bash
+php db/migrate.php --status   # what has and has not run
+php db/migrate.php            # apply the rest
+```
+
+Until that happens the site keeps working: a section with no row falls back to the
+wording in `src/content-schema.php`.
+
 Deployment requires the `FTP_SERVER`, `FTP_USERNAME`, and `FTP_PASSWORD` GitHub
 Actions repository secrets. Production-owned data is excluded from deployment:
 `.env`, `storage/`, and `public/uploads/`. Configure `.env` directly on the server;
