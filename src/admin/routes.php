@@ -52,5 +52,9 @@ return [
     'POST /media/{id}/delete'=> ['media', 'destroy'],
     'GET /settings'  => ['settings', 'index'],
     'POST /settings' => ['settings', 'save'],
-    'GET /users'    => ['users', 'index'],
+    'GET /users'          => ['users', 'index'],
+    'GET /users/new'      => ['users', 'create'],
+    'POST /users'         => ['users', 'store'],
+    'GET /users/{id}'     => ['users', 'edit'],
+    'POST /users/{id}'    => ['users', 'update'],
 ];
