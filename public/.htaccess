@@ -1,0 +1,23 @@
+# Send every request that is not a real file or directory to the front controller.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Strip trailing slashes so /about/ and /about are the same page.
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.+?)/+$ /$1 [R=301,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# Long cache on fingerprinted assets; the asset() helper appends ?v=mtime.
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css               "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/jpeg             "access plus 1 year"
+    ExpiresByType image/png              "access plus 1 year"
+</IfModule>
+
+Options -Indexes

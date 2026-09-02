@@ -1,0 +1,345 @@
+@import "tailwindcss";
+
+@source "../../src/**/*.php";
+@source "../../public/**/*.php";
+@source "../../public/assets/js/**/*.js";
+
+/* ==========================================================================
+   DDREAM design tokens. See DESIGN.md §3 to §5
+   ========================================================================== */
+@theme {
+  --color-navy-900: #04101f;
+  --color-navy-800: #071b33;
+  --color-navy-700: #0a2240;
+  --color-navy-600: #14355f;
+  --color-navy-500: #1f4a7d;
+  --color-navy-200: #c6d3e3;
+  --color-navy-100: #e8edf4;
+
+  --color-gold-600: #a8842f;
+  --color-gold-500: #c8a046;
+  --color-gold-400: #e3c574;
+  --color-gold-200: #ecdcb4;
+  --color-gold-100: #f4ebd6;
+
+  --color-signal-600: #c8102e;
+  --color-signal-500: #e02440;
+
+  --color-canvas: #fbf8f3;
+  --color-surface: #ffffff;
+  --color-ink: #101418;
+  --color-muted: #5b6672;
+  --color-hairline: #e4ddd1;
+  --color-hairline-dark: #17304f;
+  --color-verified: #1f7a55;
+
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Public Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-tag: 2px;
+  --radius-control: 4px;
+  --radius-panel: 10px;
+
+  --shadow-panel: 0 1px 2px rgb(4 16 31 / 0.04), 0 8px 24px -12px rgb(4 16 31 / 0.12);
+  --shadow-lift: 0 1px 2px rgb(4 16 31 / 0.05), 0 18px 40px -20px rgb(4 16 31 / 0.28);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --container-shell: 1240px;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-variation-settings: "SOFT" 0, "WONK" 0;
+    color: var(--color-navy-700);
+    letter-spacing: -0.015em;
+    line-height: 1.14;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-navy-700);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--color-gold-200);
+    color: var(--color-navy-900);
+  }
+
+  /* Firefox scrollbar on the dark carousel rails */
+  .rail {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-navy-200) transparent;
+  }
+  .rail::-webkit-scrollbar { height: 6px; }
+  .rail::-webkit-scrollbar-thumb {
+    background: var(--color-navy-200);
+    border-radius: 999px;
+  }
+}
+
+/* ==========================================================================
+   Components. DESIGN.md §7
+   ========================================================================== */
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: var(--container-shell);
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 1024px) {
+    .shell { padding-inline: 2rem; }
+  }
+
+  /* Type scale */
+  /* Capped at 3.5rem so the hero headline holds two lines in the 54% column.
+     The mobile floor is unchanged. */
+  .t-display {
+    font-family: var(--font-display);
+    font-size: clamp(2.75rem, 1.6rem + 3.6vw, 3.5rem);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+  }
+  .t-h1 { font-size: clamp(2.25rem, 1.5rem + 2.4vw, 3.25rem); line-height: 1.08; }
+  .t-h2 { font-size: clamp(1.75rem, 1.3rem + 1.5vw, 2.5rem); line-height: 1.15; }
+  .t-h3 { font-size: 1.375rem; line-height: 1.25; }
+  .t-lead { font-size: 1.0625rem; line-height: 1.65; }
+  @media (min-width: 768px) { .t-lead { font-size: 1.125rem; } }
+  .t-meta { font-size: 0.8125rem; line-height: 1.5; letter-spacing: 0.01em; }
+
+  /* Eyebrow + the crescent rule motif. DESIGN.md §6.1 */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    line-height: 1;
+    color: var(--color-gold-600);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 24px;
+    height: 1px;
+    background: currentColor;
+    flex: none;
+  }
+  .eyebrow-light { color: var(--color-gold-400); }
+  .eyebrow-center { justify-content: center; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 2.75rem;
+    padding-inline: 1.375rem;
+    border-radius: var(--radius-control);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.005em;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 200ms var(--ease-out-expo),
+                border-color 200ms var(--ease-out-expo),
+                color 200ms var(--ease-out-expo),
+                transform 200ms var(--ease-out-expo);
+  }
+  .btn-primary { background: var(--color-navy-700); color: #fff; }
+  .btn-primary:hover { background: var(--color-navy-600); }
+  .btn-accent { background: var(--color-gold-500); color: var(--color-navy-900); }
+  .btn-accent:hover { background: var(--color-gold-400); }
+  .btn-outline {
+    border: 1px solid var(--color-navy-700);
+    color: var(--color-navy-700);
+    background: transparent;
+  }
+  .btn-outline:hover { background: var(--color-navy-700); color: #fff; }
+  .btn-outline-light {
+    border: 1px solid rgb(255 255 255 / 0.35);
+    color: #fff;
+    background: transparent;
+  }
+  .btn-outline-light:hover { background: #fff; color: var(--color-navy-700); }
+  .btn-lg { height: 3.25rem; padding-inline: 1.75rem; font-size: 0.9375rem; }
+
+  /* Badges */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border-radius: var(--radius-tag);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+  }
+
+  /* Form controls */
+  .field {
+    width: 100%;
+    height: 2.875rem;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-control);
+    background: var(--color-surface);
+    padding-inline: 0.875rem;
+    font-size: 0.9375rem;
+    color: var(--color-ink);
+    transition: border-color 200ms var(--ease-out-expo),
+                box-shadow 200ms var(--ease-out-expo);
+  }
+  .field:hover { border-color: var(--color-navy-200); }
+  .field:focus {
+    outline: none;
+    border-color: var(--color-navy-700);
+    box-shadow: 0 0 0 3px rgb(10 34 64 / 0.1);
+  }
+  .field-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 0.4375rem;
+  }
+  select.field {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235b6672' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    padding-right: 2.25rem;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-panel);
+    transition: border-color 250ms var(--ease-out-expo),
+                box-shadow 250ms var(--ease-out-expo),
+                transform 250ms var(--ease-out-expo);
+  }
+  .card-interactive:hover {
+    border-color: var(--color-navy-200);
+    box-shadow: var(--shadow-lift);
+    transform: translateY(-3px);
+  }
+  .card-interactive:hover .card-zoom { transform: scale(1.045); }
+  .card-zoom { transition: transform 600ms var(--ease-out-expo); }
+
+  /* The lattice motif. DESIGN.md §6.2 */
+  .motif-lattice {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23e3c574' stroke-width='1.1'%3E%3Cpath d='M28 4 44 20 28 36 12 20Z'/%3E%3Cpath d='M28 14 34 20 28 26 22 20Z'/%3E%3Cpath d='M0 48 12 36 24 48 12 60Z'/%3E%3Cpath d='M32 48 44 36 56 48 44 60Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 56px 56px;
+  }
+
+  .hairline-y { border-color: var(--color-hairline); }
+
+  /* Brand plaque.
+     The supplied logo is a tall stacked lockup with three lines of type, so at
+     header height it becomes illegible. On desktop it therefore hangs below the
+     header bar on a white plaque, and collapses back into the bar on scroll. */
+  .brand-plaque {
+    display: block;
+    transition: padding 350ms var(--ease-out-expo),
+                box-shadow 350ms var(--ease-out-expo),
+                border-color 350ms var(--ease-out-expo);
+  }
+  .brand-plaque img {
+    display: block;
+    height: 3.25rem;
+    transition: height 350ms var(--ease-out-expo);
+  }
+
+  @media (min-width: 1024px) {
+    .brand-plaque {
+      position: absolute;
+      left: -1rem;
+      top: 0;
+      z-index: 10;
+      background: var(--color-surface);
+      border-radius: 0 0 1rem 1rem;
+      padding: 0.25rem 1.125rem 0.75rem;
+      box-shadow: 0 10px 20px -14px rgb(4 16 31 / 0.28);
+    }
+    .brand-plaque img { height: 5.75rem; }
+
+    /* Collapse back into the bar once the page scrolls, so the plaque never
+       covers section content. */
+    .is-scrolled .brand-plaque {
+      padding: 0.5rem 0.75rem;
+      box-shadow: none;
+    }
+    .is-scrolled .brand-plaque img { height: 3.5rem; }
+  }
+
+  /* Nav dropdown */
+  .nav-item > .nav-panel {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 180ms var(--ease-out-expo),
+                transform 180ms var(--ease-out-expo),
+                visibility 180ms;
+  }
+  .nav-item:hover > .nav-panel,
+  .nav-item:focus-within > .nav-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .tabular { font-variant-numeric: tabular-nums; }
+}
+
+/* ==========================================================================
+   Motion. DESIGN.md §10
+   ========================================================================== */
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  .reveal-in {
+    opacity: 1;
+    transform: none;
+    transition: opacity 600ms var(--ease-out-expo), transform 600ms var(--ease-out-expo);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    .reveal { opacity: 1; transform: none; }
+  }
+}
