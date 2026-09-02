@@ -12,18 +12,14 @@ $contact = config('contact', []);
 
   <div class="shell relative grid gap-10 py-16 lg:grid-cols-12 lg:items-center lg:py-20">
     <div class="lg:col-span-7">
-      <p class="eyebrow eyebrow-light">Start the conversation</p>
+      <p class="eyebrow eyebrow-light"><?= e(content('eyebrow')) ?></p>
       <h2 id="cta-heading" class="t-h2 mt-4 max-w-2xl text-white">
-        Invest with confidence. Manage with peace of mind.
+        <?= e(content('heading')) ?>
       </h2>
-      <p class="t-lead mt-4 max-w-xl text-navy-200/85">
-        Tell us what you are looking for and we will come back within one working day
-        with a shortlist, an honest view of the market, and a clear fee of
-        <?= e(config('admin_fee')) ?>, and nothing else.
-      </p>
+      <p class="t-lead mt-4 max-w-xl text-navy-200/85"><?= e(content('lead')) ?></p>
 
       <div class="mt-8 flex flex-wrap gap-3">
-        <a href="/contact" class="btn btn-accent btn-lg">Book a Consultation</a>
+        <a href="<?= e(content('primary_href')) ?>" class="btn btn-accent btn-lg"><?= e(content('primary_label')) ?></a>
         <a href="tel:<?= e($contact['phone_href']) ?>" class="btn btn-outline-light btn-lg">
           <?= icon('phone', 'h-[18px] w-[18px]') ?><span class="tabular"><?= e($contact['phone']) ?></span>
         </a>
@@ -32,14 +28,7 @@ $contact = config('contact', []);
 
     <div class="lg:col-span-5 lg:justify-self-end">
       <ul class="space-y-3 lg:w-[22rem]">
-        <?php
-        $assurances = [
-            ['icon' => 'badge-check', 'text' => 'A named adviser, not a call centre'],
-            ['icon' => 'shield-check','text' => 'Due diligence before any payment'],
-            ['icon' => 'globe',       'text' => 'Calls scheduled in your timezone'],
-            ['icon' => 'file-check',  'text' => 'Everything confirmed in writing'],
-        ];
-        foreach ($assurances as $item): ?>
+        <?php foreach (content_items('assurances') as $item): ?>
           <li class="flex items-center gap-3 rounded-[6px] border border-hairline-dark bg-navy-900/50 px-4 py-3 backdrop-blur-sm">
             <?= icon($item['icon'], 'h-5 w-5 shrink-0 text-gold-400') ?>
             <span class="text-[0.9375rem] text-white"><?= e($item['text']) ?></span>

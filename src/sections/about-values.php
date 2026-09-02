@@ -1,18 +1,16 @@
 <?php
 declare(strict_types=1);
 
-$values = data_set('about')['values'];
+$values = content_items('values');
 ?>
 <section id="values" class="scroll-mt-24 border-y border-hairline bg-surface py-16 lg:py-24" aria-labelledby="values-heading">
   <div class="shell">
     <div class="flex flex-wrap items-end justify-between gap-5">
       <div class="max-w-2xl">
-        <p class="eyebrow">What we hold to</p>
-        <h2 id="values-heading" class="t-h2 mt-4">Our Core Values</h2>
+        <p class="eyebrow"><?= e(content('eyebrow')) ?></p>
+        <h2 id="values-heading" class="t-h2 mt-4"><?= e(content('heading')) ?></h2>
       </div>
-      <p class="t-meta max-w-xs text-muted">
-        These are the values the whole business is judged on, by us and by you.
-      </p>
+      <p class="t-meta max-w-xs text-muted"><?= e(content('note')) ?></p>
     </div>
 
     <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

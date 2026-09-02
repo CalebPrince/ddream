@@ -8,12 +8,23 @@ declare(strict_types=1);
  * @var string $currentPath  path used for nav active state
  */
 
+require_once dirname(__DIR__) . '/content.php';
+
+// Everything rendered from here on belongs to this page, so its sections can
+// find their own wording.
+content_page($route['page']);
+
+// Anything set on the Page contents screen wins over the route defaults.
+$meta = content_page_meta($route['page']);
+
 $siteName    = config('name');
-$title       = empty($route['bare'])
+// A title typed into Page contents is the whole browser title, brand and all.
+// Without one, the route's title gets the site name added to it.
+$title       = $meta['title'] ?? (empty($route['bare'])
     ? ($route['title'] . ' | ' . $siteName)
-    : ($siteName . ' | ' . $route['title']);
-$description = $route['desc'] ?? config('description');
-$ogImage     = $route['image'] ?? '/images/slideshow/gc-prime-01.jpg';
+    : ($siteName . ' | ' . $route['title']));
+$description = $meta['description'] ?? $route['desc'] ?? config('description');
+$ogImage     = $meta['image'] ?? $route['image'] ?? '/images/slideshow/gc-prime-01.jpg';
 $path        = $requestPath ?? $currentPath;
 $canonical   = rtrim((string) config('url'), '/') . ($path === '/' ? '/' : $path);
 ?>

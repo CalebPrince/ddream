@@ -35,7 +35,7 @@ $development = $slides[0]['development'];
       <div class="absolute left-5 top-5 sm:left-7 sm:top-7">
         <div class="inline-flex items-center gap-2 rounded-[2px] bg-navy-900/70 px-3 py-2 backdrop-blur-sm">
           <?= icon('layers', 'h-4 w-4 text-gold-400') ?>
-          <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-white">Featured development</span>
+          <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-white"><?= e(content('badge')) ?></span>
         </div>
       </div>
 
@@ -85,7 +85,7 @@ $development = $slides[0]['development'];
       </div>
 
       <a href="/virtual-tours" class="absolute right-5 top-5 inline-flex items-center gap-2 rounded-[2px] border border-white/25 bg-navy-900/50 px-3 py-2 text-[0.75rem] font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-navy-700 sm:right-7 sm:top-7">
-        <?= icon('play', 'h-4 w-4') ?>Virtual tour
+        <?= icon('play', 'h-4 w-4') ?><?= e(content('tour_label')) ?>
       </a>
     </div>
   </div>
@@ -96,16 +96,15 @@ $development = $slides[0]['development'];
       <!-- Extra top padding on desktop clears the hanging brand plaque. -->
       <div class="py-12 lg:pb-14 lg:pt-16 xl:pb-16 xl:pt-[4.5rem]">
 
-        <p class="eyebrow">Domestic &amp; Diaspora Real Estate Management</p>
+        <p class="eyebrow"><?= e(content('eyebrow')) ?></p>
 
         <h1 class="t-display mt-5 text-navy-700 lg:mt-4 lg:text-[3.25rem]">
-          Serving the domestic and<br class="hidden sm:block">
-          <span class="italic text-gold-600">diaspora communities.</span>
+          <?= e(content('heading')) ?><br class="hidden sm:block">
+          <span class="italic text-gold-600"><?= e(content('heading_accent')) ?></span>
         </h1>
 
-        <p class="t-lead mt-5 max-w-xl text-muted lg:mt-4">
-          With integrity and outstanding professionalism, one client at a time, on a
-          <strong class="font-semibold text-navy-700">no client commission</strong> basis.
+        <p class="t-lead prose-inline mt-5 max-w-xl text-muted lg:mt-4">
+          <?= content_html('lead') ?>
         </p>
 
         <!-- Search panel -->
@@ -205,26 +204,22 @@ $development = $slides[0]['development'];
 
             <p class="mt-4 flex items-start gap-2 t-meta text-muted lg:mt-3">
               <?= icon('shield-check', 'h-4 w-4 shrink-0 translate-y-0.5 text-verified') ?>
-              Every listing is title-checked before it appears. We deal directly with
-              landlords and developers, never middlemen.
+              <span><?= e(content('search_note')) ?></span>
             </p>
           </div>
         </form>
 
         <!-- Trust markers -->
+        <?php $facts = content_items('facts'); ?>
         <dl class="mt-9 grid max-w-xl grid-cols-3 divide-x divide-hairline border-t border-hairline pt-6 lg:mt-6 lg:pt-5">
-          <div class="pr-4">
-            <dt class="t-meta text-muted">Client commission</dt>
-            <dd class="mt-1 font-display text-2xl font-semibold text-signal-600">None</dd>
-          </div>
-          <div class="px-4">
-            <dt class="t-meta text-muted">Flat admin fee</dt>
-            <dd class="mt-1 tabular font-display text-2xl font-semibold text-navy-700"><?= e(config('admin_fee')) ?></dd>
-          </div>
-          <div class="pl-4">
-            <dt class="t-meta text-muted">Middlemen</dt>
-            <dd class="mt-1 font-display text-2xl font-semibold text-navy-700">Zero</dd>
-          </div>
+          <?php foreach ($facts as $i => $fact): ?>
+            <div class="<?= $i === 0 ? 'pr-4' : ($i === count($facts) - 1 ? 'pl-4' : 'px-4') ?>">
+              <dt class="t-meta text-muted"><?= e($fact['label']) ?></dt>
+              <dd class="tabular mt-1 font-display text-2xl font-semibold <?= strtolower($fact['value']) === 'none' ? 'text-signal-600' : 'text-navy-700' ?>">
+                <?= e($fact['value']) ?>
+              </dd>
+            </div>
+          <?php endforeach; ?>
         </dl>
       </div>
     </div>

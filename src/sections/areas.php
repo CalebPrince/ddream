@@ -7,11 +7,11 @@ $areas = data_set('areas')['featured'];
   <div class="shell">
     <div class="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <p class="eyebrow">Where we operate</p>
-        <h2 id="areas-heading" class="t-h2 mt-3">Search by area</h2>
+        <p class="eyebrow"><?= e(content('eyebrow')) ?></p>
+        <h2 id="areas-heading" class="t-h2 mt-3"><?= e(content('heading')) ?></h2>
       </div>
-      <a href="/areas" class="inline-flex items-center gap-2 text-[0.9375rem] font-semibold text-navy-700 transition-colors hover:text-gold-600">
-        Browse every location <?= icon('arrow-right', 'h-4 w-4') ?>
+      <a href="<?= e(content('link_href')) ?>" class="inline-flex items-center gap-2 text-[0.9375rem] font-semibold text-navy-700 transition-colors hover:text-gold-600">
+        <?= e(content('link_label')) ?> <?= icon('arrow-right', 'h-4 w-4') ?>
       </a>
     </div>
 

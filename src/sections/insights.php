@@ -7,10 +7,10 @@ $insights = data_set('insights');
   <div class="shell">
     <div class="flex flex-wrap items-end justify-between gap-4">
       <div class="max-w-xl">
-        <p class="eyebrow">Blogs and guides</p>
-        <h2 id="insights-heading" class="t-h2 mt-3">Market intelligence, written plainly</h2>
+        <p class="eyebrow"><?= e(content('eyebrow')) ?></p>
+        <h2 id="insights-heading" class="t-h2 mt-3"><?= e(content('heading')) ?></h2>
       </div>
-      <a href="/blog" class="btn btn-outline">Read the blog <?= icon('arrow-right', 'h-4 w-4') ?></a>
+      <a href="<?= e(content('link_href')) ?>" class="btn btn-outline"><?= e(content('link_label')) ?> <?= icon('arrow-right', 'h-4 w-4') ?></a>
     </div>
 
     <ul class="mt-9 grid gap-6 md:grid-cols-3">

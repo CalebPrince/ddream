@@ -9,15 +9,11 @@ $total    = count($services['primary']) + count($services['secondary']);
 
     <div class="flex flex-wrap items-end justify-between gap-5">
       <div class="max-w-2xl">
-        <p class="eyebrow">What we do</p>
-        <h2 id="services-heading" class="t-h2 mt-4">Our Services</h2>
-        <p class="t-lead mt-4 text-muted">
-          All <?= $total ?> of them, delivered by one team. Our extensive network of
-          reputable developers, financial institutions, legal professionals, surveyors,
-          architects and contractors sits behind every one.
-        </p>
+        <p class="eyebrow"><?= e(content('eyebrow')) ?></p>
+        <h2 id="services-heading" class="t-h2 mt-4"><?= e(content('heading')) ?></h2>
+        <p class="t-lead mt-4 text-muted"><?= e(content('lead', ['{count}' => (string) $total])) ?></p>
       </div>
-      <a href="/contact" class="btn btn-outline">Discuss your requirement</a>
+      <a href="<?= e(content('link_href')) ?>" class="btn btn-outline"><?= e(content('link_label')) ?></a>
     </div>
 
     <!-- The six we are most often engaged for -->
@@ -51,12 +47,9 @@ $total    = count($services['primary']) + count($services['secondary']);
       <?php endforeach; ?>
     </ul>
 
-    <p class="mt-7 flex items-start gap-2 t-meta text-muted">
+    <p class="prose-inline mt-7 flex items-start gap-2 t-meta text-muted">
       <?= icon('shield-check', 'h-4 w-4 shrink-0 translate-y-0.5 text-verified') ?>
-      Every one of these is delivered on the same
-      <strong class="font-semibold text-navy-700">No Client Commission</strong> basis:
-      the commission falls on the seller or landlord, and you pay a flat
-      <span class="tabular"><?= e(config('admin_fee')) ?></span> administrative fee.
+      <span><?= content_html('footnote') ?></span>
     </p>
   </div>
 </section>

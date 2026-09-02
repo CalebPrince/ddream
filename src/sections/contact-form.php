@@ -4,35 +4,17 @@ declare(strict_types=1);
 $areas   = data_set('areas');
 $contact = config('contact', []);
 
-$interests = [
-    'Buying a property',
-    'Renting a property',
-    'Airbnb / short stay',
-    'Selling my property',
-    'Letting my property',
-    'Property management',
-    'Building or project supervision',
-    'Land acquisition',
-    'Something else',
-];
-
-$steps = [
-    ['icon' => 'mail',        'title' => 'We read it properly',   'body' => 'Your enquiry goes to an adviser, not an autoresponder.'],
-    ['icon' => 'phone',       'title' => 'We come back in a day',  'body' => 'One working day, on the channel and at the time you asked for.'],
-    ['icon' => 'file-check',  'title' => 'You get it in writing',  'body' => 'A shortlist, an honest view of the market, and a clear fee.'],
-];
+$interests = content_lines('interests');
+$steps     = content_items('steps');
 ?>
 <section id="enquiry" class="scroll-mt-24 bg-canvas py-16 lg:py-24" aria-labelledby="form-heading">
   <div class="shell grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
 
     <!-- The form -->
     <div class="lg:col-span-7">
-      <p class="eyebrow">Send us a brief</p>
-      <h2 id="form-heading" class="t-h2 mt-4">Tell us what you are looking for</h2>
-      <p class="t-lead mt-3 text-muted">
-        The more you can tell us, the more useful our first reply will be. Nothing here
-        commits you to anything.
-      </p>
+      <p class="eyebrow"><?= e(content('eyebrow')) ?></p>
+      <h2 id="form-heading" class="t-h2 mt-4"><?= e(content('heading')) ?></h2>
+      <p class="t-lead mt-3 text-muted"><?= e(content('lead')) ?></p>
 
       <form class="mt-8 rounded-[10px] border border-hairline bg-surface p-6 shadow-panel lg:p-8"
             action="/contact" method="post" novalidate>
@@ -158,24 +140,23 @@ $steps = [
           <input type="checkbox" name="consent" required
                  class="mt-1 h-4 w-4 shrink-0 rounded-[2px] border-hairline text-navy-700 focus:ring-navy-700">
           <span>
-            I am happy for DDREAM to contact me about this enquiry.
+            <?= e(content('consent')) ?>
             <span class="text-signal-600">*</span>
           </span>
         </label>
 
         <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
           <button type="submit" class="btn btn-primary btn-lg flex-1">
-            <?= icon('mail', 'h-[18px] w-[18px]') ?>Send my enquiry
+            <?= icon('mail', 'h-[18px] w-[18px]') ?><?= e(content('submit_label')) ?>
           </button>
           <a href="tel:<?= e($contact['phone_href']) ?>" class="btn btn-outline btn-lg">
-            <?= icon('phone', 'h-4 w-4') ?>Call instead
+            <?= icon('phone', 'h-4 w-4') ?><?= e(content('call_label')) ?>
           </a>
         </div>
 
         <p class="mt-4 flex items-start gap-2 t-meta text-muted">
           <?= icon('shield-check', 'h-4 w-4 shrink-0 translate-y-0.5 text-verified') ?>
-          We use your details to answer this enquiry and nothing else. We never sell or
-          share them.
+          <span><?= e(content('privacy_note')) ?></span>
         </p>
       </form>
     </div>
@@ -183,7 +164,7 @@ $steps = [
     <!-- What happens next -->
     <aside class="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
       <div class="card p-6 lg:p-7">
-        <h3 class="t-h3">What happens next</h3>
+        <h3 class="t-h3"><?= e(content('next_heading')) ?></h3>
         <ol class="mt-6 space-y-6">
           <?php foreach ($steps as $i => $step): ?>
             <li class="flex gap-4">
@@ -207,11 +188,7 @@ $steps = [
           <p class="flex items-baseline gap-2 font-display text-xl font-semibold leading-none">
             <span class="text-signal-600">No</span><span class="text-navy-700">Client Commission</span>
           </p>
-          <p class="mt-3 t-meta text-muted">
-            The commission falls on the seller or landlord. You pay a flat
-            <span class="tabular font-semibold text-navy-700"><?= e(config('admin_fee')) ?></span>
-            administrative fee, and nothing else.
-          </p>
+          <p class="mt-3 t-meta text-muted"><?= e(content('panel_note')) ?></p>
         </div>
       </div>
     </aside>

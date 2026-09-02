@@ -54,15 +54,23 @@ $facts    ??= [];
         <?php endif; ?>
 
         <p class="eyebrow mt-6"><?= e($eyebrow) ?></p>
-        <h1 class="t-h1 mt-4 font-display"><?= $heading ?></h1>
+        <h1 class="t-h1 prose-inline mt-4 font-display"><?= $heading ?></h1>
         <p class="t-lead mt-5 max-w-xl text-muted"><?= e($lead) ?></p>
 
         <?php if ($facts): ?>
           <dl class="mt-8 grid max-w-lg grid-cols-3 divide-x divide-hairline border-t border-hairline pt-5">
             <?php foreach ($facts as $i => $fact): ?>
+              <?php
+              // "None" and "Free" are the promises worth colouring, whoever
+              // typed them into Page contents.
+              $accent = $fact['accent']
+                  ?? (in_array(strtolower((string) $fact['value']), ['none', 'free'], true)
+                      ? 'text-signal-600'
+                      : 'text-navy-700');
+              ?>
               <div class="<?= $i === 0 ? 'pr-4' : ($i === count($facts) - 1 ? 'pl-4' : 'px-4') ?>">
                 <dt class="t-meta text-muted"><?= e($fact['label']) ?></dt>
-                <dd class="tabular mt-1 whitespace-nowrap font-display text-lg font-semibold sm:text-2xl <?= $fact['accent'] ?? 'text-navy-700' ?>">
+                <dd class="tabular mt-1 whitespace-nowrap font-display text-lg font-semibold sm:text-2xl <?= $accent ?>">
                   <?= e($fact['value']) ?>
                 </dd>
               </div>

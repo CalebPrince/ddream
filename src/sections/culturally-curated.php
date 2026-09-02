@@ -6,12 +6,7 @@ declare(strict_types=1);
  * strapline beneath it on the left, and the trust cards on the right.
  */
 
-$points = [
-    ['icon' => 'shield-check', 'title' => 'Registered company',  'body' => 'A limited liability company filed with the Registrar of Companies, working from an office you can walk into.'],
-    ['icon' => 'users',        'title' => 'No middlemen',         'body' => 'We hold the relationships with landlords, developers and vendors ourselves.'],
-    ['icon' => 'globe',        'title' => 'Local and global',     'body' => 'Staff born and bred in Ghana, with several years of working experience abroad.'],
-    ['icon' => 'file-check',   'title' => 'Due diligence first',  'body' => 'Title searches and litigation checks before any offer is made on your behalf.'],
-];
+$points = content_items('points');
 ?>
 <section class="border-b border-hairline bg-surface py-14 lg:py-20" aria-labelledby="curated-heading">
   <div class="shell grid items-start gap-10 lg:grid-cols-12 lg:gap-14">
@@ -20,18 +15,18 @@ $points = [
     <div class="lg:col-span-5">
       <figure class="reveal">
         <div class="overflow-hidden rounded-[10px] border border-hairline bg-navy-900">
-          <img src="<?= e(asset('/images/kente-cloth.jpg')) ?>"
-               alt="Rolls of woven kente cloth in green, gold, red and black"
+          <img src="<?= e(asset(content('image'))) ?>"
+               alt="<?= e(content('image_alt')) ?>"
                width="331" height="220" loading="lazy"
                class="aspect-[3/2] w-full object-cover">
         </div>
 
         <figcaption class="mt-6">
-          <h2 id="curated-heading" class="t-h2 text-[1.75rem] leading-tight lg:text-[2rem]">
-            Our Building Blocks are<br class="hidden sm:block"> Culturally Curated.
+          <h2 id="curated-heading" class="t-h2 prose-inline text-[1.75rem] leading-tight lg:text-[2rem]">
+            <?= content_html('heading') ?>
           </h2>
           <p class="mt-3 flex flex-wrap items-center gap-x-2 font-display text-lg font-semibold text-navy-700">
-            One Client at a time.
+            <?= e(content('strapline')) ?>
             <span class="inline-flex items-baseline gap-1.5">
               <span class="text-signal-600">No</span>
               <span>Client Commission</span>
@@ -58,9 +53,7 @@ $points = [
 
       <p class="mt-5 flex items-start gap-2 t-meta text-muted">
         <?= icon('shield-check', 'h-4 w-4 shrink-0 translate-y-0.5 text-verified') ?>
-        The commission falls on the seller or landlord, never on you. You pay a flat
-        <span class="tabular font-semibold text-navy-700"><?= e(config('admin_fee')) ?></span>
-        administrative fee and nothing else.
+        <span><?= e(content('footnote')) ?></span>
       </p>
     </div>
   </div>

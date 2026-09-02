@@ -129,6 +129,21 @@
   @media (min-width: 768px) { .t-lead { font-size: 1.125rem; } }
   .t-meta { font-size: 0.8125rem; line-height: 1.5; letter-spacing: 0.01em; }
 
+  /* Copy typed in Page contents may carry bold, italics and links. Style them
+     here so an editor cannot end up with unstyled markup on the page. */
+  .prose-inline strong,
+  .prose-inline b { font-weight: 600; color: var(--color-navy-700); }
+  .prose-inline em,
+  .prose-inline i { font-style: italic; }
+  .prose-inline a {
+    font-weight: 600;
+    color: var(--color-navy-700);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 150ms ease;
+  }
+  .prose-inline a:hover { color: var(--color-gold-600); }
+
   /* Eyebrow + the crescent rule motif. DESIGN.md §6.1 */
   .eyebrow {
     display: inline-flex;

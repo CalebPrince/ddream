@@ -57,11 +57,26 @@ if (!function_exists('asset')) {
 }
 
 if (!function_exists('section')) {
-    /** Render a section template with scoped data. */
+    /**
+     * Render a section template with scoped data.
+     *
+     * Bands an editor has switched off in Page contents are skipped, and the
+     * section's own wording is made available to the template through content().
+     */
     function section(string $name, array $data = []): void
     {
+        require_once __DIR__ . '/content.php';
+
+        if (!content_enabled($name)) {
+            return;
+        }
+
+        $previousSection = content_section($name, true);
+
         extract($data, EXTR_SKIP);
         require __DIR__ . '/sections/' . $name . '.php';
+
+        content_section($previousSection, true);
     }
 }
 

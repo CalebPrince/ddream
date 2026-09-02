@@ -1,8 +1,7 @@
 <?php
 declare(strict_types=1);
 
-$about     = data_set('about');
-$apart     = $about['apart'];
+$apart     = content_items('items');
 $corridors = config('corridors', []);
 ?>
 <section id="apart" class="scroll-mt-24 bg-canvas py-16 lg:py-24" aria-labelledby="apart-heading">
@@ -12,8 +11,8 @@ $corridors = config('corridors', []);
       <!-- Sticky so the commission panel stays beside the six cards rather than
            leaving a void once the shorter column runs out. -->
       <div class="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
-        <p class="eyebrow">The difference</p>
-        <h2 id="apart-heading" class="t-h2 mt-4">What Sets Us Apart?</h2>
+        <p class="eyebrow"><?= e(content('eyebrow')) ?></p>
+        <h2 id="apart-heading" class="t-h2 mt-4"><?= e(content('heading')) ?></h2>
 
         <div class="mt-7 rounded-[10px] border border-hairline bg-surface p-6 shadow-panel">
           <p class="flex items-baseline gap-2 font-display text-3xl font-semibold leading-none">
@@ -31,9 +30,7 @@ $corridors = config('corridors', []);
               <dd class="tabular shrink-0 font-sans text-[0.9375rem] font-semibold text-navy-700"><?= e(config('admin_fee')) ?> flat</dd>
             </div>
           </dl>
-          <p class="mt-5 t-meta text-muted">
-            No percentage, no success fee, no surprise at closing.
-          </p>
+          <p class="mt-5 t-meta text-muted"><?= e(content('panel_note')) ?></p>
         </div>
       </div>
 
@@ -56,8 +53,8 @@ $corridors = config('corridors', []);
     <div class="reveal mt-12 overflow-hidden rounded-[10px] border border-hairline bg-surface lg:mt-16">
       <div class="grid gap-8 p-7 lg:grid-cols-12 lg:items-center lg:gap-10 lg:p-9">
         <div class="lg:col-span-5">
-          <h3 class="t-h3">Wherever you happen to be</h3>
-          <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted"><?= e($about['reach']) ?></p>
+          <h3 class="t-h3"><?= e(content('reach_heading')) ?></h3>
+          <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted"><?= e(content('reach')) ?></p>
         </div>
         <ul class="flex flex-wrap gap-2 lg:col-span-7 lg:justify-end">
           <?php foreach ($corridors as $city): ?>

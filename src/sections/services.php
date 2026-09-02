@@ -10,14 +10,11 @@ $total    = count($services['primary']) + count($services['secondary']);
   <div class="shell">
     <div class="flex flex-wrap items-end justify-between gap-5">
       <div class="max-w-2xl">
-        <p class="eyebrow">Our services</p>
-        <h2 id="services-heading" class="t-h2 mt-3">End-to-end, under one roof</h2>
-        <p class="t-lead mt-3 text-muted">
-          Our network of reputable developers, financial institutions, legal professionals,
-          surveyors, architects and contractors sits behind every one of these.
-        </p>
+        <p class="eyebrow"><?= e(content('eyebrow')) ?></p>
+        <h2 id="services-heading" class="t-h2 mt-3"><?= e(content('heading')) ?></h2>
+        <p class="t-lead mt-3 text-muted"><?= e(content('lead')) ?></p>
       </div>
-      <a href="/about#services" class="btn btn-outline">
+      <a href="<?= e(content('link_href')) ?>" class="btn btn-outline">
         All <?= $total ?> services <?= icon('arrow-right', 'h-4 w-4') ?>
       </a>
     </div>
@@ -40,7 +37,7 @@ $total    = count($services['primary']) + count($services['secondary']);
     </ul>
 
     <div class="mt-8 rounded-[10px] border border-hairline bg-canvas p-6 sm:p-7">
-      <h3 class="t-meta font-semibold uppercase tracking-[0.14em] text-muted">Also available</h3>
+      <h3 class="t-meta font-semibold uppercase tracking-[0.14em] text-muted"><?= e(content('secondary_heading')) ?></h3>
       <ul class="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
         <?php foreach ($services['secondary'] as $item): ?>
           <li>

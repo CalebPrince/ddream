@@ -1,20 +1,15 @@
 <?php
 declare(strict_types=1);
 
-$differentiators = [
-    ['icon' => 'globe',        'title' => 'Local expertise, global perspective', 'body' => 'Our staff were born and bred in Ghana and have spent years working abroad. They know both sides of the conversation.'],
-    ['icon' => 'landmark',     'title' => 'A real, identifiable office',          'body' => 'A registered limited liability company operating from a recognised address. Meetings happen in our offices, face to face.'],
-    ['icon' => 'users',        'title' => 'Direct landlord access',               'body' => 'We hold the relationships ourselves. No agent chains, no inflated asking prices, no phantom listings.'],
-    ['icon' => 'clock',        'title' => 'Swift and bespoke service',            'body' => 'One client at a time. You get a named contact who answers, and a service shaped around your circumstances.'],
-];
+$differentiators = content_items('items');
 ?>
 <section id="apart" class="bg-canvas py-16 lg:py-24" aria-labelledby="commission-heading">
   <div class="shell grid gap-12 lg:grid-cols-12 lg:gap-14">
 
     <div class="lg:col-span-5">
-      <p class="eyebrow">What sets us apart</p>
-      <h2 id="commission-heading" class="t-h2 mt-4">
-        The commission never<br class="hidden sm:block"> falls on you
+      <p class="eyebrow"><?= e(content('eyebrow')) ?></p>
+      <h2 id="commission-heading" class="t-h2 prose-inline mt-4">
+        <?= content_html('heading') ?>
       </h2>
 
       <div class="mt-7 rounded-[10px] border border-hairline bg-surface p-6 shadow-panel">
@@ -35,18 +30,10 @@ $differentiators = [
           </div>
         </dl>
 
-        <p class="mt-5 t-meta text-muted">
-          A single <?= e(config('admin_fee')) ?> administrative fee per client covers our
-          running costs. That is the whole of what you pay us. There is no percentage,
-          no success fee and no surprise at closing.
-        </p>
+        <p class="mt-5 t-meta text-muted"><?= e(content('panel_note')) ?></p>
       </div>
 
-      <p class="mt-6 max-w-md text-[0.9375rem] leading-relaxed text-muted">
-        Whether you are in Accra, Kumasi, London, Amsterdam, Berlin, New York, Toronto,
-        Johannesburg, a member of the diplomatic community or anywhere else in the world,
-        the arithmetic is the same.
-      </p>
+      <p class="mt-6 max-w-md text-[0.9375rem] leading-relaxed text-muted"><?= e(content('note')) ?></p>
     </div>
 
     <div class="lg:col-span-7">
@@ -64,12 +51,9 @@ $differentiators = [
 
       <blockquote class="reveal mt-5 rounded-[10px] border border-gold-200 bg-gold-100/60 p-6">
         <?= icon('quote', 'h-6 w-6 text-gold-600') ?>
-        <p class="mt-3 font-display text-xl leading-snug text-navy-700">
-          We combine local expertise with a global perspective, so every client enjoys a
-          safe, transparent and rewarding real estate experience.
-        </p>
+        <p class="mt-3 font-display text-xl leading-snug text-navy-700"><?= e(content('quote')) ?></p>
         <footer class="mt-4 t-meta font-semibold uppercase tracking-[0.12em] text-gold-600">
-          The DDREAM commitment
+          <?= e(content('quote_source')) ?>
         </footer>
       </blockquote>
     </div>

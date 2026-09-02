@@ -58,6 +58,39 @@ Users              Superadmin only, plus activity log
 Each public page is a list of named `page_sections` in the order they appear, so editors
 change wording and images without touching layout.
 
+### How a page section is edited
+
+`src/content-schema.php` describes every band: its fields, their type, and the wording the
+site shipped with. That one file is what the Page contents form draws and what the section
+template reads, so the two can never drift apart.
+
+`page_sections.data` holds only what an editor has actually changed. A field put back to
+its original wording is dropped again, which means an unedited site renders from the
+schema, the form always opens with the live copy in it rather than an empty box, and
+improvements to the shipped wording still reach pages nobody has touched.
+
+| Type | Field | Stored as |
+|---|---|---|
+| `line` | one-line text | string |
+| `text` | paragraph | string |
+| `rich` | paragraph keeping `<strong> <em> <a> <br>` | sanitised string |
+| `lines` | one item per line | list of strings |
+| `list` | repeating rows described by `item` | list of objects |
+| `link` | URL or path | string |
+| `image` | path under `public/` | string |
+| `icon` | an icon name, inside `item` only | string |
+
+Templates read their own section through `content()`, `content_html()`, `content_items()`
+and `content_lines()`. `{fee}` in any field is replaced with the flat admin fee.
+
+Bands marked `locked` in the schema are the ones a page cannot render without; the rest
+carry a "Show this section" toggle that `section()` honours. Band order is the order in
+the page template, not the `sort` column, so the form does not offer to reorder them.
+
+Adding an editable field is one entry in the schema plus one `content()` call in the
+template. Adding a whole band is a section template, a schema entry, and a row in
+`page_sections`.
+
 ## Schema
 
 Every content table carries `created_at`, `updated_at`, `updated_by`.
@@ -94,7 +127,7 @@ and every template keeps working.
 | `data/listings.php` | `listings` + `listing_images` + `listing_features` | Listings |
 | `data/areas.php` | `locations` | Listings > Locations |
 | `data/slideshow.php` | `page_sections` (home hero) | Page contents > Home |
-| `data/about.php` | `page_sections` (about) | Page contents > About |
+| `data/about.php` | `page_sections` (about), **done** | Page contents > About |
 | `data/services.php` | `services` | Services |
 | `data/posts.php` | `posts` + `post_categories` | Blogs |
 | `data/careers.php` | `vacancies` | Careers |
@@ -127,7 +160,10 @@ service, not PHP `mail()`.
 - Uploads: extension and MIME allowlist, size cap, images re-encoded to strip embedded
   content, stored where scripts cannot execute.
 - PDO prepared statements throughout; no interpolation into SQL.
-- The existing `e()` helper on every rendered value, including staff-entered content.
+- The existing `e()` helper on every rendered value, including staff-entered content. The
+  one exception is a `rich` page-section field, which keeps a fixed handful of inline tags:
+  it is stripped of everything else on save, and an anchor keeps only an `href` that starts
+  with `/`, `#`, `http://`, `https://`, `mailto:` or `tel:`.
 - Public forms: honeypot, minimum time-to-submit, per-IP rate limit.
 - HTTPS enforced, HSTS, admin excluded from search engines.
 - Credentials in a file outside the web root, never committed.
@@ -141,7 +177,8 @@ service, not PHP `mail()`.
    database. **Built.**
 3. **Inbox and live forms.** Wire contact, consultation, viewing and tour forms with
    validation, spam defences and notification. Nothing before this captures a lead.
-4. **Page contents and settings.** Section editors, company details, navigation, SEO.
+4. **Page contents and settings.** Section editors **built**; company details, navigation,
+   SEO still to do.
 5. **Blogs, careers, services.** The last of the flat files retired.
 6. **Refinements.** `/search`, `/saved`, enquiry export, 2FA, scheduled publishing.
 

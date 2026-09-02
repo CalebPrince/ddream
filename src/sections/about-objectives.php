@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-$objectives = data_set('about')['objectives'];
+$objectives = content_lines('objectives');
 ?>
 <section id="objectives" class="scroll-mt-24 bg-canvas py-16 lg:py-24" aria-labelledby="objectives-heading">
   <div class="shell">
     <div class="max-w-2xl">
-      <p class="eyebrow">What we set out to do</p>
-      <h2 id="objectives-heading" class="t-h2 mt-4">Our Objectives</h2>
+      <p class="eyebrow"><?= e(content('eyebrow')) ?></p>
+      <h2 id="objectives-heading" class="t-h2 mt-4"><?= e(content('heading')) ?></h2>
     </div>
 
     <ol class="mt-10 grid gap-px overflow-hidden rounded-[10px] border border-hairline bg-hairline md:grid-cols-2 lg:grid-cols-3">

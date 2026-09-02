@@ -3,11 +3,7 @@ declare(strict_types=1);
 
 $contact = config('contact', []);
 
-$expect = [
-    ['icon' => 'users',      'title' => 'A face, not a call centre',   'body' => 'You meet the person who will handle your file, in our office, before anything is signed.'],
-    ['icon' => 'file-check', 'title' => 'Firsthand information',       'body' => 'Company documents, and the full file on every property under consideration.'],
-    ['icon' => 'camera',     'title' => 'A viewing plan',              'body' => 'Filmed walkthroughs if you are abroad, a driver and a schedule if you are flying in.'],
-];
+$expect = content_items('expect');
 ?>
 <section id="office" class="border-t border-hairline bg-surface py-16 lg:py-24" aria-labelledby="office-heading">
   <div class="shell grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-14">
@@ -15,8 +11,8 @@ $expect = [
     <div class="lg:col-span-6">
       <figure>
         <div class="overflow-hidden rounded-[10px] border border-hairline">
-          <img src="<?= e(asset('/images/front-desk.png')) ?>"
-               alt="The DDREAM reception at the Airport Residential office in Accra"
+          <img src="<?= e(asset(content('image'))) ?>"
+               alt="<?= e(content('image_alt')) ?>"
                width="1536" height="1024" loading="lazy"
                class="w-full object-cover">
         </div>
@@ -28,12 +24,9 @@ $expect = [
     </div>
 
     <div class="lg:col-span-6">
-      <p class="eyebrow">Come and see us</p>
-      <h2 id="office-heading" class="t-h2 mt-4">We hold meetings in our own office</h2>
-      <p class="t-lead mt-4 text-muted">
-        A registered company at an address you can walk into. Clients are welcome to visit,
-        meet the team and see the files before committing to anything.
-      </p>
+      <p class="eyebrow"><?= e(content('eyebrow')) ?></p>
+      <h2 id="office-heading" class="t-h2 mt-4"><?= e(content('heading')) ?></h2>
+      <p class="t-lead mt-4 text-muted"><?= e(content('lead')) ?></p>
 
       <ul class="mt-8 space-y-5">
         <?php foreach ($expect as $item): ?>
@@ -51,11 +44,11 @@ $expect = [
 
       <dl class="mt-8 grid gap-4 border-t border-hairline pt-6 sm:grid-cols-2">
         <div>
-          <dt class="t-meta text-muted">Opening hours</dt>
+          <dt class="t-meta text-muted"><?= e(content('hours_label')) ?></dt>
           <dd class="mt-1 text-[0.9375rem] font-medium text-navy-700"><?= e($contact['hours']) ?></dd>
         </div>
         <div>
-          <dt class="t-meta text-muted">Book ahead on</dt>
+          <dt class="t-meta text-muted"><?= e(content('phone_label')) ?></dt>
           <dd class="mt-1 text-[0.9375rem] font-medium text-navy-700">
             <a class="tabular transition-colors hover:text-gold-600" href="tel:<?= e($contact['phone_href']) ?>"><?= e($contact['phone']) ?></a>
           </dd>
@@ -63,8 +56,8 @@ $expect = [
       </dl>
 
       <div class="mt-7 flex flex-wrap gap-3">
-        <a href="/contact" class="btn btn-primary">Book a Consultation</a>
-        <a href="#services" class="btn btn-outline">See all our services</a>
+        <a href="<?= e(content('primary_href')) ?>" class="btn btn-primary"><?= e(content('primary_label')) ?></a>
+        <a href="<?= e(content('secondary_href')) ?>" class="btn btn-outline"><?= e(content('secondary_label')) ?></a>
       </div>
     </div>
   </div>
