@@ -2,16 +2,19 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Force HTTPS before anything else, so a plain http:// request is redirected
-    # once rather than bouncing through the trailing-slash rule first. The second
-    # condition covers a proxy or CDN that terminates TLS and forwards over http.
+    # Strip trailing slashes so /about/ and /about are the same page, naming the
+    # scheme in the target so this doubles as the https redirect. Both jobs in one
+    # 301: a relative /$1 here would keep the scheme it arrived on and hand a plain
+    # http request straight to the rule below for a second hop.
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.+?)/+$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+    # Everything the rule above did not already move to https: the root, addresses
+    # with no trailing slash, and real directories. The second condition covers a
+    # proxy or CDN that terminates TLS and forwards over http.
     RewriteCond %{HTTPS} !=on
     RewriteCond %{HTTP:X-Forwarded-Proto} !=https
     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-
-    # Strip trailing slashes so /about/ and /about are the same page.
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.+?)/+$ /$1 [R=301,L]
 
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
